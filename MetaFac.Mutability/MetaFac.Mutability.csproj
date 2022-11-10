@@ -6,7 +6,8 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Description>Mutability contracts for domain entities.</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>MetaFac.Mutability</Title>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
