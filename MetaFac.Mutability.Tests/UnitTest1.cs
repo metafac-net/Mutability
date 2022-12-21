@@ -8,18 +8,18 @@ namespace MetaFac.Mutability.Tests
         [Fact]
         public void CreateFrozen1()
         {
-            SampleRecord immutable = new() { Field1 = 123 };
+            SampleMutable mutable = new() { Field1 = 123 };
             SampleFreezable freezable = new() { Field1 = 456 };
             freezable.IsFrozen().Should().BeFalse();
-            freezable.CopyFrom(immutable);
+            freezable.CopyFrom(mutable);
             freezable.Freeze();
             freezable.IsFrozen().Should().BeTrue();
-            freezable.Field1.Should().Be(immutable.Field1);
+            freezable.Field1.Should().Be(mutable.Field1);
         }
         [Fact]
         public void CreateFrozen2()
         {
-            SampleRecord immutable = new() { Field1 = 123 };
+            SampleMutable immutable = new() { Field1 = 123 };
             SampleFreezable freezable = SampleFreezable.Create((x) => x.CopyFrom(immutable));
             freezable.IsFrozen().Should().BeTrue();
             freezable.Field1.Should().Be(immutable.Field1);
@@ -27,12 +27,12 @@ namespace MetaFac.Mutability.Tests
         [Fact]
         public void CreateFrozen3()
         {
-            SampleRecord immutable = new() { Field1 = 123 };
-            SampleFreezable freezable = immutable.Unfrozen<SampleFreezable, ISample>();
+            SampleMutable mutable = new() { Field1 = 123 };
+            SampleFreezable freezable = mutable.Unfrozen<SampleFreezable, ISample>();
             freezable.IsFrozen().Should().BeFalse();
             freezable.Freeze();
             freezable.IsFrozen().Should().BeTrue();
-            freezable.Field1.Should().Be(immutable.Field1);
+            freezable.Field1.Should().Be(mutable.Field1);
         }
         [Fact]
         public void CreateFrozen4()
@@ -43,6 +43,7 @@ namespace MetaFac.Mutability.Tests
             copy.Field1.Should().Be(orig.Field1);
             copy.Equals(orig).Should().BeTrue();
         }
+#if NET5_0_OR_GREATER
         [Fact]
         public void CreateRecord1()
         {
@@ -60,5 +61,6 @@ namespace MetaFac.Mutability.Tests
             copy.IsFrozen().Should().BeTrue();
             copy.Field1.Should().Be(orig.Field1);
         }
+#endif
     }
 }

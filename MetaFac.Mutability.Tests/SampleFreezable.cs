@@ -2,10 +2,10 @@
 
 namespace MetaFac.Mutability.Tests
 {
-    public class SampleFreezable : BaseFreezable, ISample, ICopyFrom<SampleFreezable>, ICopyFrom<ISample>, IEquatable<SampleFreezable>
+    public class SampleFreezable : FreezableBase, ISample, ICopyFrom<SampleFreezable>, ICopyFrom<ISample>, IEquatable<SampleFreezable>
     {
         private int field1;
-        public int Field1 { get => field1; set => field1 = EnsureMutable(ref value); }
+        public int Field1 { get => field1; set => field1 = CheckNotFrozen(ref value); }
         public static SampleFreezable Create(Action<SampleFreezable> initMethod)
         {
             SampleFreezable freezable = new();
@@ -19,14 +19,17 @@ namespace MetaFac.Mutability.Tests
             }
             return freezable;
         }
+        protected override void OnFreeze()
+        {
+        }
         public void CopyFrom(ISample source)
         {
-            EnsureMutable();
+            ThrowIfFrozen();
             Field1 = source.Field1;
         }
         public void CopyFrom(SampleFreezable source)
         {
-            EnsureMutable();
+            base.CopyFrom(source);
             field1 = source.field1;
         }
 
