@@ -6,8 +6,8 @@ namespace MetaFac.Mutability.Tests
     {
         public int Field1 { get; set; }
         public bool IsFreezable() => false;
-        public void Freeze() => throw new InvalidOperationException();
-        public bool TryFreeze() => throw new InvalidOperationException();
+        public void Freeze() { }
+        public bool TryFreeze() => false;
         public bool IsFrozen() => false;
         public void CopyFrom(ISample source)
         {

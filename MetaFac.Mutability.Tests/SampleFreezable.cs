@@ -21,6 +21,7 @@ namespace MetaFac.Mutability.Tests
         }
         protected override void OnFreeze()
         {
+            base.OnFreeze();
         }
         public void CopyFrom(ISample source)
         {

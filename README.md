@@ -8,5 +8,5 @@ Abstractions for working with mutable, immutable and freezable types.
 - IFreezable
 - ICopyFrom
 - extensions for working with freezables
-- a convenient abstract base class for freezables
+- a convenient base class for freezables
 

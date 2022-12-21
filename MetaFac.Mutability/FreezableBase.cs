@@ -3,7 +3,7 @@ using System;
 
 namespace MetaFac.Mutability
 {
-    public abstract class FreezableBase : IFreezable, ICopyFrom<FreezableBase>, IEquatable<FreezableBase>
+    public class FreezableBase : IFreezable, ICopyFrom<FreezableBase>, IEquatable<FreezableBase>
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         protected static void ThrowFrozen([CallerMemberName] string? method = null)
@@ -49,7 +49,7 @@ namespace MetaFac.Mutability
             ThrowIfFrozen();
         }
 
-        protected abstract void OnFreeze();
+        protected virtual void OnFreeze() { }
 
         public void Freeze()
         {
