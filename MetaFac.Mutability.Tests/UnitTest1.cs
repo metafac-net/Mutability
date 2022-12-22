@@ -6,7 +6,7 @@ namespace MetaFac.Mutability.Tests
     public class UnitTest1
     {
         [Fact]
-        public void CreateFrozen1()
+        public void CreateFrozenFromMutable()
         {
             SampleMutable mutable = new() { Field1 = 123 };
             SampleFreezable freezable = new() { Field1 = 456 };
@@ -17,15 +17,7 @@ namespace MetaFac.Mutability.Tests
             freezable.Field1.Should().Be(mutable.Field1);
         }
         [Fact]
-        public void CreateFrozen2()
-        {
-            SampleMutable immutable = new() { Field1 = 123 };
-            SampleFreezable freezable = SampleFreezable.Create((x) => x.CopyFrom(immutable));
-            freezable.IsFrozen().Should().BeTrue();
-            freezable.Field1.Should().Be(immutable.Field1);
-        }
-        [Fact]
-        public void CreateFrozen3()
+        public void CreateFrozenViaExtension()
         {
             SampleMutable mutable = new() { Field1 = 123 };
             SampleFreezable freezable = mutable.Unfrozen<SampleFreezable, ISample>();
@@ -35,7 +27,7 @@ namespace MetaFac.Mutability.Tests
             freezable.Field1.Should().Be(mutable.Field1);
         }
         [Fact]
-        public void CreateFrozen4()
+        public void CreateFrozenViaCloning()
         {
             SampleFreezable orig = new SampleFreezable() { Field1 = 123 }.Frozen();
             SampleFreezable copy = orig.Unfrozen().Frozen();
@@ -45,18 +37,20 @@ namespace MetaFac.Mutability.Tests
         }
 #if NET5_0_OR_GREATER
         [Fact]
-        public void CreateRecord1()
+        public void CreateRecordViaCloning()
         {
             SampleRecord orig = new() { Field1 = 123 };
             SampleRecord copy = new(orig);
             copy.IsFrozen().Should().BeTrue();
             copy.Field1.Should().Be(orig.Field1);
             copy.Equals(orig).Should().BeTrue();
+            copy.Should().Be(orig);
         }
         [Fact]
-        public void CreateRecord2()
+        public void CreateRecordFromFreezable()
         {
-            SampleFreezable orig = new SampleFreezable() { Field1 = 123 }.Frozen();
+            SampleFreezable orig = new SampleFreezable() { Field1 = 123 };
+            orig = orig.Frozen();
             SampleRecord copy = new(orig);
             copy.IsFrozen().Should().BeTrue();
             copy.Field1.Should().Be(orig.Field1);

@@ -11,6 +11,14 @@ namespace MetaFac.Mutability
             throw new InvalidOperationException($"Cannot call '{method}' when frozen");
         }
 
+        protected volatile bool _frozen = false;
+
+        public FreezableBase() { }
+        public FreezableBase(FreezableBase source) { }
+
+        public bool IsFrozen() => _frozen;
+        public bool IsFreezable() => true;
+
         /// <summary>
         /// Throws InvalidOperationException if immutable.
         /// </summary>
@@ -34,15 +42,6 @@ namespace MetaFac.Mutability
         {
             if (IsFrozen()) ThrowFrozen(method);
         }
-
-        protected volatile bool _frozen = false;
-
-        public bool IsFrozen() => _frozen;
-        public bool IsFreezable() => true;
-
-        public FreezableBase() { }
-
-        public FreezableBase(FreezableBase source) { }
 
         public void CopyFrom(FreezableBase source)
         {

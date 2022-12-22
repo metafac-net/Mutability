@@ -4,6 +4,11 @@ using System;
 
 namespace MetaFac.Mutability
 {
+    // Kind         IsFreezable     IsFrozen
+    // Mutable      false           false
+    // Immutable    false           true
+    // Freezable    true            false/true
+
     /// <summary>
     /// Represents a freezable type i.e. one that can change state from mutable to immutable.
     /// </summary>
@@ -38,5 +43,4 @@ namespace MetaFac.Mutability
         /// </summary>
         bool TryFreeze();
     }
-
 }

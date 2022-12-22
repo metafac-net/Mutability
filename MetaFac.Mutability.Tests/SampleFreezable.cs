@@ -6,23 +6,7 @@ namespace MetaFac.Mutability.Tests
     {
         private int field1;
         public int Field1 { get => field1; set => field1 = CheckNotFrozen(ref value); }
-        public static SampleFreezable Create(Action<SampleFreezable> initMethod)
-        {
-            SampleFreezable freezable = new();
-            try
-            {
-                initMethod(freezable);
-            }
-            finally
-            {
-                freezable.Freeze();
-            }
-            return freezable;
-        }
-        protected override void OnFreeze()
-        {
-            base.OnFreeze();
-        }
+
         public void CopyFrom(ISample source)
         {
             ThrowIfFrozen();
@@ -38,7 +22,7 @@ namespace MetaFac.Mutability.Tests
         {
             if (other is null) return false;
             if (other.field1 != field1) return false;
-            return true;
+            return base.Equals(other);
         }
 
         public override bool Equals(object? obj)
