@@ -1,0 +1,87 @@
+﻿namespace MetaFac.Mutability
+{
+    public class FreezableBase : MetaFac.Mutability.ICopyFrom<MetaFac.Mutability.FreezableBase>, MetaFac.Mutability.IFreezable, System.IEquatable<MetaFac.Mutability.FreezableBase>
+    {
+        protected volatile bool? _frozen;
+        public FreezableBase() { }
+        public FreezableBase(MetaFac.Mutability.FreezableBase source) { }
+        protected T& CheckNotFrozen<T>(ref T value, [System.Runtime.CompilerServices.CallerMemberName] string? method = null) { }
+        public void CopyFrom(MetaFac.Mutability.FreezableBase source) { }
+        public bool Equals(MetaFac.Mutability.FreezableBase? other) { }
+        public override bool Equals(object? obj) { }
+        public void Freeze() { }
+        public override int GetHashCode() { }
+        public bool IsFreezable() { }
+        public bool IsFrozen() { }
+        protected virtual void OnFreeze() { }
+        protected void ThrowIfFrozen([System.Runtime.CompilerServices.CallerMemberName] string? method = null) { }
+        public bool TryFreeze() { }
+        protected static void ThrowFrozen([System.Runtime.CompilerServices.CallerMemberName] string? method = null) { }
+    }
+    public interface IBuild<TImmutable>
+    {
+        TImmutable Build();
+    }
+    public interface IBuilder<TImmutable, TBuilder>
+        where TBuilder : MetaFac.Mutability.IBuild<TImmutable>
+    {
+        TBuilder ToBuilder();
+    }
+    public interface ICopyFrom<T>
+    {
+        void CopyFrom(T source);
+    }
+    public interface IFreezable
+    {
+        void Freeze();
+        bool IsFreezable();
+        bool IsFrozen();
+        bool TryFreeze();
+    }
+    public class ImmutableBase : MetaFac.Mutability.IFreezable, System.IEquatable<MetaFac.Mutability.ImmutableBase>
+    {
+        public ImmutableBase() { }
+        public ImmutableBase(MetaFac.Mutability.ImmutableBase source) { }
+        public bool Equals(MetaFac.Mutability.ImmutableBase? other) { }
+        public override bool Equals(object? obj) { }
+        public void Freeze() { }
+        public override int GetHashCode() { }
+        public bool IsFreezable() { }
+        public bool IsFrozen() { }
+        public bool TryFreeze() { }
+    }
+    public static class MutabilityExtensions
+    {
+        public static T Frozen<T>(this T original)
+            where T :  class, MetaFac.Mutability.IFreezable { }
+        public static T Unfrozen<T>(this T? source)
+            where T :  class, MetaFac.Mutability.IFreezable, MetaFac.Mutability.ICopyFrom<T>, new () { }
+        public static TOut Unfrozen<TOut, TInp>(this TInp? source)
+            where TOut :  class, MetaFac.Mutability.IFreezable, MetaFac.Mutability.ICopyFrom<TInp>, new ()
+            where TInp :  class { }
+        public static T With<T>(this T? self, System.Action<T> action, bool refreeze = false)
+            where T :  class, MetaFac.Mutability.IFreezable, MetaFac.Mutability.ICopyFrom<T>, new () { }
+    }
+    public class MutableBase : MetaFac.Mutability.ICopyFrom<MetaFac.Mutability.MutableBase>, MetaFac.Mutability.IFreezable, System.IEquatable<MetaFac.Mutability.MutableBase>
+    {
+        public MutableBase() { }
+        public MutableBase(MetaFac.Mutability.MutableBase source) { }
+        public void CopyFrom(MetaFac.Mutability.MutableBase source) { }
+        public bool Equals(MetaFac.Mutability.MutableBase? other) { }
+        public override bool Equals(object? obj) { }
+        public void Freeze() { }
+        public override int GetHashCode() { }
+        public bool IsFreezable() { }
+        public bool IsFrozen() { }
+        public bool TryFreeze() { }
+    }
+    public class RecordBase : MetaFac.Mutability.IFreezable, System.IEquatable<MetaFac.Mutability.RecordBase>
+    {
+        public RecordBase() { }
+        public RecordBase(MetaFac.Mutability.RecordBase source) { }
+        public void Freeze() { }
+        public bool IsFreezable() { }
+        public bool IsFrozen() { }
+        public bool TryFreeze() { }
+    }
+}
