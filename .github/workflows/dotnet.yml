@@ -1,8 +1,8 @@
 #
-# Builds, tests and publishes the FluentModels package
+# Builds, tests and publishes the Mutability package
 #
 
-name: Memory
+name: Build-Deploy
 
 on:
   push:
