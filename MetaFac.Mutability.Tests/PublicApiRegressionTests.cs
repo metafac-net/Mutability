@@ -11,7 +11,7 @@ namespace MetaFac.Mutability.Tests
         [Fact]
         public void VersionCheck()
         {
-            ThisAssembly.AssemblyVersion.Should().Be("2.3.0.0");
+            ThisAssembly.AssemblyVersion.Should().Be("3.0.0.0");
         }
 
         [Fact]
